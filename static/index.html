@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Health Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <i class="fas fa-heartbeat text-red-500 text-2xl mr-2"></i>
+          <span class="font-medium text-xl text-gray-800">Heart Health Predictor</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="/" class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500">Home</a>
+          <a href="/predict" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Predict</a>
+          <a href="/model-info" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Model Info</a>
+          <a href="/api-docs" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">API Docs</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Heart Disease Prediction</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Early detection saves lives. Our state-of-the-art machine learning model helps predict heart disease risk.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-500 mb-4">
+            <i class="fas fa-stethoscope text-xl"></i>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Accurate Predictions</h3>
+          <p class="text-gray-600">
+            Our machine learning model achieves 86% accuracy in predicting heart disease risk based on clinical parameters.
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-500 mb-4">
+            <i class="fas fa-lock text-xl"></i>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Privacy Focused</h3>
+          <p class="text-gray-600">
+            Your health data never leaves your device. All predictions are processed securely on our servers.
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-500 mb-4">
+            <i class="fas fa-code text-xl"></i>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Developer API</h3>
+          <p class="text-gray-600">
+            Integrate our prediction model into your own healthcare applications using our easy-to-use API.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <a href="/predict" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        Get Started
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="text-center text-gray-500 text-sm">
+        <p>&copy; 2025 Heart Health Predictor. All rights reserved.</p>
+        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if the API is available
+      fetch('/api/health')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.model_loaded) {
+            alert('Warning: Prediction model is not loaded properly. Some features may not work as expected.');
+          }
+        })
+        .catch(error => {
+          console.error('Error checking API health:', error);
+        });
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Information</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <i class="fas fa-heartbeat text-red-500 text-2xl mr-2"></i>
+          <span class="font-medium text-xl text-gray-800">Heart Health Predictor</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="/" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Home</a>
+          <a href="/predict" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Predict</a>
+          <a href="/model-info" class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500">Model Info</a>
+          <a href="/api-docs" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">API Docs</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Model Information</h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <!-- Model Details Card -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1">
+        <div class="p-6">
+          <h2 class="text-xl font-medium text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-info-circle text-red-500 mr-2"></i>
+            Model Details
+          </h2>
+          <div id="modelDetails" class="space-y-4">
+            <div class="flex justify-between border-b border-gray-100 pb-2">
+              <span class="text-gray-600">Model Name</span>
+              <span id="modelName" class="font-medium text-gray-900">Loading...</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-100 pb-2">
+              <span class="text-gray-600">Created On</span>
+              <span id="createdAt" class="font-medium text-gray-900">Loading...</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-100 pb-2">
+              <span class="text-gray-600">Training Dataset Size</span>
+              <span id="trainingSize" class="font-medium text-gray-900">Loading...</span>
+            </div>
+            <div class="flex justify-between pb-2">
+              <span class="text-gray-600">Target Classes</span>
+              <span id="targetClasses" class="font-medium text-gray-900">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Metrics Card -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden col-span-1 lg:col-span-2">
+        <div class="p-6">
+          <h2 class="text-xl font-medium text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-chart-line text-red-500 mr-2"></i>
+            Performance Metrics
+          </h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-gray-50 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-red-600 mb-1" id="accuracy">-</div>
+              <div class="text-xs text-gray-500 uppercase">Accuracy</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-red-600 mb-1" id="precision">-</div>
+              <div class="text-xs text-gray-500 uppercase">Precision</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-red-600 mb-1" id="recall">-</div>
+              <div class="text-xs text-gray-500 uppercase">Recall</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-red-600 mb-1" id="f1">-</div>
+              <div class="text-xs text-gray-500 uppercase">F1 Score</div>
+            </div>
+          </div>
+          <div class="h-64">
+            <canvas id="metricsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+      <div class="p-6">
+        <h2 class="text-xl font-medium text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-list-ul text-red-500 mr-2"></i>
+          Model Features
+        </h2>
+        <p class="text-gray-600 mb-6">
+          The model uses the following clinical features to predict heart disease risk:
+        </p>
+        
+        <div id="featuresContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="animate-pulse flex space-x-4">
+            <div class="flex-1 space-y-4 py-1">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+          <div class="animate-pulse flex space-x-4">
+            <div class="flex-1 space-y-4 py-1">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+          <div class="animate-pulse flex space-x-4">
+            <div class="flex-1 space-y-4 py-1">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Model Explanation -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="p-6">
+        <h2 class="text-xl font-medium text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-brain text-red-500 mr-2"></i>
+          How The Model Works
+        </h2>
+        
+        <div class="prose max-w-none text-gray-600">
+          <p>
+            Our heart disease prediction model uses machine learning to analyze patient data and determine the likelihood of heart disease presence. Here's how it works:
+          </p>
+          
+          <h3 class="text-lg font-medium text-gray-800 mt-4">Data Collection</h3>
+          <p>
+            The model was trained on the Cleveland Heart Disease dataset, which contains anonymized patient records with various clinical measurements and their corresponding heart disease diagnoses.
+          </p>
+          
+          <h3 class="text-lg font-medium text-gray-800 mt-4">Feature Processing</h3>
+          <p>
+            Before making predictions, the model processes input data through these steps:
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Categorical features are encoded into numerical values</li>
+            <li>Numerical features are scaled to standardize their ranges</li>
+            <li>Missing values are handled appropriately</li>
+          </ul>
+          
+          <h3 class="text-lg font-medium text-gray-800 mt-4">Prediction</h3>
+          <p>
+            Once processed, the data is passed through the model, which outputs a probability score indicating the likelihood of heart disease. This score is then converted to a binary prediction:
+          </p>
+          <ul class="list-disc pl-6 space-y-2">
+            <li><span class="font-medium">0</span>: Low risk - Heart disease not likely present</li>
+            <li><span class="font-medium">1</span>: High risk - Heart disease likely present</li>
+          </ul>
+          
+          <div class="bg-blue-50 p-4 rounded-md border border-blue-200 text-blue-700 text-sm mt-6">
+            <div class="flex">
+              <i class="fas fa-info-circle mt-0.5 mr-2"></i>
+              <div>
+                <p class="font-medium">Important Note:</p>
+                <p class="mt-1">
+                  This model is intended for informational purposes only and should not replace professional medical advice. Always consult with a healthcare provider for proper diagnosis and treatment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="text-center text-gray-500 text-sm">
+        <p>&copy; 2025 Heart Health Predictor. All rights reserved.</p>
+        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch model information
+      fetch('/api/model-info')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('modelName').textContent = data.model_name || 'Unknown';
+          document.getElementById('createdAt').textContent = data.created_at || 'Unknown';
+          
+          // Display target labels
+          if (data.target_labels && data.target_labels.length > 0) {
+            const labels = data.target_labels.map((label, index) => 
+              `${label} (${index})`
+            ).join(', ');
+            document.getElementById('targetClasses').textContent = labels;
+          } else {
+            document.getElementById('targetClasses').textContent = '0 (No Disease), 1 (Disease)';
+          }
+          
+          // Display features
+          if (data.features && data.features.length > 0) {
+            const featuresContainer = document.getElementById('featuresContainer');
+            featuresContainer.innerHTML = '';
+            
+            // Feature descriptions
+            const featureDescriptions = {
+              'age': 'Patient\'s age in years',
+              'sex': 'Sex (1 = male, 0 = female)',
+              'cp': 'Chest pain type (0-3)',
+              'trestbps': 'Resting blood pressure (mm Hg)',
+              'chol': 'Serum cholesterol (mg/dl)',
+              'fbs': 'Fasting blood sugar > 120 mg/dl (1 = true, 0 = false)',
+              'restecg': 'Resting electrocardiographic results (0-2)',
+              'thalach': 'Maximum heart rate achieved',
+              'exang': 'Exercise induced angina (1 = yes, 0 = no)',
+              'oldpeak': 'ST depression induced by exercise relative to rest',
+              'slope': 'Slope of the peak exercise ST segment (0-2)',
+              'ca': 'Number of major vessels colored by fluoroscopy (0-3)',
+              'thal': 'Thalassemia (1 = normal, 2 = fixed defect, 3 = reversible defect)'
+            };
+            
+            data.features.forEach(feature => {
+              const featureCard = document.createElement('div');
+              featureCard.className = 'bg-gray-50 rounded-lg p-4';
+              
+              const name = document.createElement('div');
+              name.className = 'font-medium text-gray-800';
+              name.textContent = feature;
+              
+              const description = document.createElement('div');
+              description.className = 'text-sm text-gray-600 mt-1';
+              description.textContent = featureDescriptions[feature] || 'No description available';
+              
+              featureCard.appendChild(name);
+              featureCard.appendChild(description);
+              featuresContainer.appendChild(featureCard);
+            });
+          } else {
+            document.getElementById('featuresContainer').innerHTML = 
+              '<div class="col-span-full text-gray-500">Feature information not available</div>';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching model info:', error);
+          document.getElementById('modelName').textContent = 'Error loading data';
+          document.getElementById('createdAt').textContent = 'Error loading data';
+          document.getElementById('targetClasses').textContent = 'Error loading data';
+          document.getElementById('featuresContainer').innerHTML = 
+            '<div class="col-span-full text-red-500">Failed to load feature information</div>';
+        });
+      
+      // Fetch model performance metrics
+      fetch('/api/model-performance')
+        .then(response => response.json())
+        .then(data => {
+          // Display metrics
+          document.getElementById('accuracy').textContent = (data.accuracy * 100).toFixed(1) + '%';
+          document.getElementById('precision').textContent = (data.precision * 100).toFixed(1) + '%';
+          document.getElementById('recall').textContent = (data.recall * 100).toFixed(1) + '%';
+          document.getElementById('f1').textContent = (data.f1_score * 100).toFixed(1) + '%';
+          document.getElementById('trainingSize').textContent = data.training_size;
+          
+          // Create chart
+          const ctx = document.getElementById('metricsChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'AUC ROC'],
+              datasets: [{
+                label: 'Model Performance Metrics',
+                data: [
+                  data.accuracy * 100, 
+                  data.precision * 100, 
+                  data.recall * 100, 
+                  data.f1_score * 100,
+                  data.auc_roc * 100
+                ],
+                backgroundColor: [
+                  'rgba(239, 68, 68, 0.7)',
+                  'rgba(239, 68, 68, 0.7)',
+                  'rgba(239, 68, 68, 0.7)',
+                  'rgba(239, 68, 68, 0.7)',
+                  'rgba(239, 68, 68, 0.7)'
+                ],
+                borderColor: [
+                  'rgba(239, 68, 68, 1)',
+                  'rgba(239, 68, 68, 1)',
+                  'rgba(239, 68, 68, 1)',
+                  'rgba(239, 68, 68, 1)',
+                  'rgba(239, 68, 68, 1)'
+                ],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                  ticks: {
+                    callback: function(value) {
+                      return value + '%';
+                    }
+                  }
+                }
+              }
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching performance metrics:', error);
+          document.getElementById('accuracy').textContent = 'Error';
+          document.getElementById('precision').textContent = 'Error';
+          document.getElementById('recall').textContent = 'Error';
+          document.getElementById('f1').textContent = 'Error';
+          document.getElementById('trainingSize').textContent = 'Error';
+        });
+    });
+  </script>
+</body>
+</html>
