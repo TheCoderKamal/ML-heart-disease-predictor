@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-50 min-h-screen">
   <nav class="backdrop-blur-md bg-white/70 shadow-lg border-b border-white/20 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,28 +17,38 @@
           <i class="fas fa-heartbeat text-red-500 text-2xl mr-2"></i>
           <span class="font-medium text-xl text-gray-800">Heart Health Predictor</span>
         </div>
-        
+
         <!-- Mobile menu button -->
         <div class="flex items-center md:hidden">
-          <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
+          <button id="mobile-menu-button" type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+            aria-controls="mobile-menu" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <!-- Icon when menu is closed -->
-            <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
             <!-- Icon when menu is open -->
-            <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        
+
         <!-- Desktop menu -->
         <div class="hidden md:flex md:items-center md:space-x-4">
-          <a href="/" class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500 hover:bg-red-50/30 rounded-t-md transition-all duration-300">Home</a>
-          <a href="/predict" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Predict</a>
-          <a href="/model-info" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Model Info</a>
-          <a href="/api-docs" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">API Docs</a>
+          <a href="/"
+            class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500 hover:bg-red-50/30 rounded-t-md transition-all duration-300">Home</a>
+          <a href="/predict"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Predict</a>
+          <a href="/model-info"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Model
+            Info</a>
+          <a href="/api-docs"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">API
+            Docs</a>
         </div>
       </div>
     </div>
@@ -44,10 +56,16 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="md:hidden hidden" id="mobile-menu">
       <div class="pt-2 pb-3 space-y-1 backdrop-blur-md bg-white/80">
-        <a href="/" class="bg-red-50/50 border-l-4 border-red-500 text-red-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
-        <a href="/predict" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Predict</a>
-        <a href="/model-info" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Model Info</a>
-        <a href="/api-docs" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">API Docs</a>
+        <a href="/"
+          class="bg-red-50/50 border-l-4 border-red-500 text-red-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
+        <a href="/predict"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Predict</a>
+        <a href="/model-info"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Model
+          Info</a>
+        <a href="/api-docs"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">API
+          Docs</a>
       </div>
     </div>
   </nav>
@@ -68,11 +86,12 @@
           </div>
           <h3 class="text-lg font-medium text-gray-900 mb-2">Accurate Predictions</h3>
           <p class="text-gray-600">
-            Our machine learning model achieves 86% accuracy in predicting heart disease risk based on clinical parameters.
+            Our machine learning model achieves 86% accuracy in predicting heart disease risk based on clinical
+            parameters.
           </p>
         </div>
       </div>
-      
+
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
         <div class="p-6">
           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-500 mb-4">
@@ -84,7 +103,7 @@
           </p>
         </div>
       </div>
-      
+
       <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
         <div class="p-6">
           <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-500 mb-4">
@@ -99,7 +118,8 @@
     </div>
 
     <div class="flex flex-col items-center">
-      <a href="/predict" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+      <a href="/predict"
+        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
         Get Started
         <i class="fas fa-arrow-right ml-2"></i>
       </a>
@@ -110,13 +130,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="text-center text-gray-500 text-sm">
         <p>&copy; 2025 Heart Health Predictor. All rights reserved.</p>
-        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.</p>
+        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.
+        </p>
       </div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Check if the API is available
       fetch('/api/health')
         .then(response => response.json())
@@ -130,23 +151,91 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mobile menu toggle functionality
       const menuButton = document.getElementById('mobile-menu-button');
       const mobileMenu = document.getElementById('mobile-menu');
       const openIcon = document.getElementById('menu-open-icon');
       const closedIcon = document.getElementById('menu-closed-icon');
-      
-      menuButton.addEventListener('click', function() {
+
+      menuButton.addEventListener('click', function () {
         // Toggle menu visibility
         const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
         menuButton.setAttribute('aria-expanded', !isExpanded);
         mobileMenu.classList.toggle('hidden');
-        
+
         // Toggle icons
         openIcon.classList.toggle('hidden');
         closedIcon.classList.toggle('hidden');
       });
+
+      // Get all navigation links
+      const desktopNavLinks = document.querySelectorAll('.md\\:flex a');
+      const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+
+      // Function to set active link
+      function setActiveLink(clickedLink) {
+        // Get href of clicked link
+        const href = clickedLink.getAttribute('href');
+
+        // Remove active classes from all desktop links
+        desktopNavLinks.forEach(link => {
+          link.classList.remove('text-red-600', 'border-b-2', 'border-red-500');
+          link.classList.add('text-gray-600', 'hover:text-gray-800');
+        });
+
+        // Remove active classes from all mobile links
+        mobileNavLinks.forEach(link => {
+          link.classList.remove('bg-red-50/50', 'border-red-500', 'text-red-700');
+          link.classList.add('border-transparent', 'text-gray-600', 'hover:bg-gray-50/50', 'hover:border-gray-300', 'hover:text-gray-800');
+        });
+
+        // Add active classes to matching desktop links
+        desktopNavLinks.forEach(link => {
+          if (link.getAttribute('href') === href) {
+            link.classList.remove('text-gray-600', 'hover:text-gray-800');
+            link.classList.add('text-red-600', 'border-b-2', 'border-red-500');
+          }
+        });
+
+        // Add active classes to matching mobile links
+        mobileNavLinks.forEach(link => {
+          if (link.getAttribute('href') === href) {
+            link.classList.remove('border-transparent', 'text-gray-600', 'hover:bg-gray-50/50', 'hover:border-gray-300', 'hover:text-gray-800');
+            link.classList.add('bg-red-50/50', 'border-red-500', 'text-red-700');
+          }
+        });
+      }
+
+      // Add click event listeners to all navigation links
+      desktopNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          // Only prevent default if you're handling navigation in JavaScript
+          // e.preventDefault(); 
+          setActiveLink(this);
+        });
+      });
+
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          // Only prevent default if you're handling navigation in JavaScript
+          // e.preventDefault();
+          setActiveLink(this);
+        });
+      });
+
+      // Set active link based on current URL on page load
+      const currentPath = window.location.pathname;
+      const currentPageLink = [...desktopNavLinks, ...mobileNavLinks].find(link =>
+        link.getAttribute('href') === currentPath ||
+        (currentPath === '/' && link.getAttribute('href') === '/')
+      );
+
+      if (currentPageLink) {
+        setActiveLink(currentPageLink);
+      }
     });
   </script>
 </body>
-</html> 
+
+</html>

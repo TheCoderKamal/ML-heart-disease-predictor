@@ -116,7 +116,7 @@ def preprocess_data(df, target_col="Heart Disease Status"):
     
     return X, y, scaler, encoder_dict
 
-def handle_imbalanced_data(X, y, method="SMOTE"):
+def handle_imbalanced_data(X, y, method="SMOTE", k_neighbors=5):
     """
     Handle imbalanced dataset using various resampling techniques
     """
@@ -124,9 +124,15 @@ def handle_imbalanced_data(X, y, method="SMOTE"):
     print(f"\nOriginal class distribution: {dict(original_class_dist.map(lambda x: f'{x:.2f}%'))}")
     
     if method == "SMOTE":
-        resampler = SMOTE(random_state=RANDOM_SEED)
+        resampler = SMOTE(random_state=RANDOM_SEED, k_neighbors=k_neighbors)
     elif method == "ADASYN":
-        resampler = ADASYN(random_state=RANDOM_SEED)
+        resampler = ADASYN(random_state=RANDOM_SEED, n_neighbors=k_neighbors)
+    elif method == "BorderlineSMOTE":
+        from imblearn.over_sampling import BorderlineSMOTE
+        resampler = BorderlineSMOTE(random_state=RANDOM_SEED, k_neighbors=k_neighbors)
+    elif method == "None":
+        print("Skipping resampling, will use class weights instead")
+        return X, y
     else:
         print(f"Warning: Unknown resampling method '{method}'. Using SMOTE as default.")
         resampler = SMOTE(random_state=RANDOM_SEED)
@@ -143,17 +149,18 @@ def train_evaluate_models(X_train, X_test, y_train, y_test):
     """
     Train multiple models and evaluate their performance
     """
-    # Initialize models
+    
+    # Initialize models with class weights where supported
     models = {
-        "Logistic Regression": LogisticRegression(max_iter=1000, random_state=RANDOM_SEED),
-        "K-Nearest Neighbors": KNeighborsClassifier(),
-        "Decision Tree": DecisionTreeClassifier(random_state=RANDOM_SEED),
-        "Random Forest": RandomForestClassifier(random_state=RANDOM_SEED),
-        "SVM": SVC(probability=True, random_state=RANDOM_SEED),
-        "Naïve Bayes": GaussianNB(),
-        "AdaBoost": AdaBoostClassifier(random_state=RANDOM_SEED),
-        "Gradient Boosting": GradientBoostingClassifier(random_state=RANDOM_SEED),
-        "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=RANDOM_SEED)
+        "Logistic Regression": LogisticRegression(max_iter=1000, class_weight='balanced', random_state=RANDOM_SEED),
+        "K-Nearest Neighbors": KNeighborsClassifier(),  # KNN doesn't support class weights
+        "Decision Tree": DecisionTreeClassifier(class_weight='balanced', random_state=RANDOM_SEED),
+        "Random Forest": RandomForestClassifier(class_weight='balanced', random_state=RANDOM_SEED),
+        "SVM": SVC(probability=True, class_weight='balanced', random_state=RANDOM_SEED),
+        "Naïve Bayes": GaussianNB(),  # NB doesn't support class weights
+        "AdaBoost": AdaBoostClassifier(random_state=RANDOM_SEED),  # Uses weak learners with their own weighting
+        "Gradient Boosting": GradientBoostingClassifier(random_state=RANDOM_SEED),  # Internal handling of imbalance
+        "XGBoost": XGBClassifier(use_label_encoder=False, scale_pos_weight=len(y_train[y_train==0])/len(y_train[y_train==1]), eval_metric='logloss', random_state=RANDOM_SEED)
     }
     
     # Train and evaluate models

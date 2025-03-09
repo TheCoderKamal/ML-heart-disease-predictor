@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-50 min-h-screen">
   <nav class="backdrop-blur-md bg-white/70 shadow-lg border-b border-white/20 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,28 +17,38 @@
           <i class="fas fa-heartbeat text-red-500 text-2xl mr-2"></i>
           <span class="font-medium text-xl text-gray-800">Heart Health Predictor</span>
         </div>
-        
+
         <!-- Mobile menu button -->
         <div class="flex items-center md:hidden">
-          <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
+          <button id="mobile-menu-button" type="button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+            aria-controls="mobile-menu" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <!-- Icon when menu is closed -->
-            <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
             <!-- Icon when menu is open -->
-            <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        
+
         <!-- Desktop menu -->
         <div class="hidden md:flex md:items-center md:space-x-4">
-          <a href="/" class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500 hover:bg-red-50/30 rounded-t-md transition-all duration-300">Home</a>
-          <a href="/predict" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Predict</a>
-          <a href="/model-info" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Model Info</a>
-          <a href="/api-docs" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">API Docs</a>
+          <a href="/"
+            class="px-3 py-2 text-sm font-medium text-red-600 border-b-2 border-red-500 hover:bg-red-50/30 rounded-t-md transition-all duration-300">Home</a>
+          <a href="/predict"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Predict</a>
+          <a href="/model-info"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">Model
+            Info</a>
+          <a href="/api-docs"
+            class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50/30 rounded-t-md transition-all duration-300">API
+            Docs</a>
         </div>
       </div>
     </div>
@@ -44,31 +56,39 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="md:hidden hidden" id="mobile-menu">
       <div class="pt-2 pb-3 space-y-1 backdrop-blur-md bg-white/80">
-        <a href="/" class="bg-red-50/50 border-l-4 border-red-500 text-red-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
-        <a href="/predict" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Predict</a>
-        <a href="/model-info" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Model Info</a>
-        <a href="/api-docs" class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">API Docs</a>
+        <a href="/"
+          class="bg-red-50/50 border-l-4 border-red-500 text-red-700 block pl-3 pr-4 py-2 text-base font-medium">Home</a>
+        <a href="/predict"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Predict</a>
+        <a href="/model-info"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">Model
+          Info</a>
+        <a href="/api-docs"
+          class="border-l-4 border-transparent text-gray-600 hover:bg-gray-50/50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 text-base font-medium transition-all duration-300">API
+          Docs</a>
       </div>
     </div>
   </nav>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h1 class="text-3xl font-bold text-gray-900 mb-6">Heart Disease Risk Assessment</h1>
-    
+
     <div class="mb-8">
       <p class="text-gray-600 mb-4">
-        Enter your health data below to receive a heart disease risk prediction. All fields are required for accurate results.
+        Enter your health data below to receive a heart disease risk prediction. All fields are required for accurate
+        results.
       </p>
       <div class="bg-blue-50 p-4 rounded-md border border-blue-200 text-blue-700 text-sm flex items-start">
         <i class="fas fa-info-circle mt-0.5 mr-2"></i>
-        <span>This prediction is for informational purposes only. Please consult with a healthcare professional for proper medical advice.</span>
+        <span>This prediction is for informational purposes only. Please consult with a healthcare professional for
+          proper medical advice.</span>
       </div>
     </div>
 
     <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
       <div class="p-6">
         <h2 class="text-xl font-medium text-gray-900 mb-4">Patient Information</h2>
-        
+
         <form id="predictionForm" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Basic Information -->
@@ -77,7 +97,7 @@
               <input type="number" id="age" name="age" min="1" max="120" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
             </div>
-            
+
             <div>
               <label for="sex" class="block text-sm font-medium text-gray-700">Sex</label>
               <select id="sex" name="sex" required
@@ -100,19 +120,20 @@
                 <option value="3">Asymptomatic</option>
               </select>
             </div>
-            
+
             <div>
-              <label for="trestbps" class="block text-sm font-medium text-gray-700">Resting Blood Pressure (mm Hg)</label>
+              <label for="trestbps" class="block text-sm font-medium text-gray-700">Resting Blood Pressure (mm
+                Hg)</label>
               <input type="number" id="trestbps" name="trestbps" min="50" max="250" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
             </div>
-            
+
             <div>
               <label for="chol" class="block text-sm font-medium text-gray-700">Cholesterol (mg/dl)</label>
               <input type="number" id="chol" name="chol" min="100" max="600" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
             </div>
-            
+
             <div>
               <label for="fbs" class="block text-sm font-medium text-gray-700">Fasting Blood Sugar > 120 mg/dl</label>
               <select id="fbs" name="fbs" required
@@ -122,7 +143,7 @@
                 <option value="0">No</option>
               </select>
             </div>
-            
+
             <div>
               <label for="restecg" class="block text-sm font-medium text-gray-700">Resting ECG Results</label>
               <select id="restecg" name="restecg" required
@@ -133,13 +154,13 @@
                 <option value="2">Left Ventricular Hypertrophy</option>
               </select>
             </div>
-            
+
             <div>
               <label for="thalach" class="block text-sm font-medium text-gray-700">Maximum Heart Rate</label>
               <input type="number" id="thalach" name="thalach" min="60" max="220" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
             </div>
-            
+
             <div>
               <label for="exang" class="block text-sm font-medium text-gray-700">Exercise Induced Angina</label>
               <select id="exang" name="exang" required
@@ -149,15 +170,17 @@
                 <option value="0">No</option>
               </select>
             </div>
-            
+
             <div>
-              <label for="oldpeak" class="block text-sm font-medium text-gray-700">ST Depression Induced by Exercise</label>
+              <label for="oldpeak" class="block text-sm font-medium text-gray-700">ST Depression Induced by
+                Exercise</label>
               <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
             </div>
-            
+
             <div>
-              <label for="slope" class="block text-sm font-medium text-gray-700">Slope of Peak Exercise ST Segment</label>
+              <label for="slope" class="block text-sm font-medium text-gray-700">Slope of Peak Exercise ST
+                Segment</label>
               <select id="slope" name="slope" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
                 <option value="" disabled selected>Select</option>
@@ -166,9 +189,10 @@
                 <option value="2">Downsloping</option>
               </select>
             </div>
-            
+
             <div>
-              <label for="ca" class="block text-sm font-medium text-gray-700">Number of Major Vessels Colored by Fluoroscopy</label>
+              <label for="ca" class="block text-sm font-medium text-gray-700">Number of Major Vessels Colored by
+                Fluoroscopy</label>
               <select id="ca" name="ca" required
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500">
                 <option value="" disabled selected>Select</option>
@@ -178,7 +202,7 @@
                 <option value="3">3</option>
               </select>
             </div>
-            
+
             <div>
               <label for="thal" class="block text-sm font-medium text-gray-700">Thalassemia</label>
               <select id="thal" name="thal" required
@@ -190,9 +214,9 @@
               </select>
             </div>
           </div>
-          
+
           <div class="flex justify-center">
-            <button type="submit" 
+            <button type="submit"
               class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
               Generate Prediction
               <i class="fas fa-heartbeat ml-2"></i>
@@ -206,46 +230,49 @@
     <div id="resultsSection" class="hidden bg-white rounded-xl shadow-md overflow-hidden">
       <div class="p-6">
         <h2 class="text-xl font-medium text-gray-900 mb-4">Prediction Results</h2>
-        
+
         <div id="loadingResults" class="flex justify-center items-center py-8">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
         </div>
-        
+
         <div id="predictionResults" class="hidden">
           <div class="flex items-center justify-center mb-6">
             <div id="riskMeter" class="w-64 h-32 relative">
               <!-- Risk meter will be rendered here -->
             </div>
           </div>
-          
+
           <div class="bg-gray-50 rounded-lg p-4 mb-4">
             <div class="flex justify-between items-center">
               <span class="text-gray-700 font-medium">Prediction:</span>
               <span id="predictionValue" class="font-semibold"></span>
             </div>
-            
+
             <div class="flex justify-between items-center mt-2">
               <span class="text-gray-700 font-medium">Probability:</span>
               <span id="probabilityValue" class="font-semibold"></span>
             </div>
           </div>
-          
-          <div id="highRiskMessage" class="hidden bg-red-50 p-4 rounded-md border border-red-200 text-red-700 text-sm mb-4">
+
+          <div id="highRiskMessage"
+            class="hidden bg-red-50 p-4 rounded-md border border-red-200 text-red-700 text-sm mb-4">
             <div class="flex">
               <i class="fas fa-exclamation-circle mt-0.5 mr-2"></i>
-              <span>The model predicts a high risk of heart disease. Please consult with a healthcare professional for proper evaluation.</span>
+              <span>The model predicts a high risk of heart disease. Please consult with a healthcare professional for
+                proper evaluation.</span>
             </div>
           </div>
-          
-          <div id="lowRiskMessage" class="hidden bg-green-50 p-4 rounded-md border border-green-200 text-green-700 text-sm mb-4">
+
+          <div id="lowRiskMessage"
+            class="hidden bg-green-50 p-4 rounded-md border border-green-200 text-green-700 text-sm mb-4">
             <div class="flex">
               <i class="fas fa-check-circle mt-0.5 mr-2"></i>
               <span>The model predicts a low risk of heart disease. Continue maintaining a healthy lifestyle.</span>
             </div>
           </div>
-          
+
           <div class="mt-6 flex justify-center">
-            <button id="resetButton" type="button" 
+            <button id="resetButton" type="button"
               class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
               <i class="fas fa-redo mr-2"></i>
               Reset Form
@@ -260,31 +287,99 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="text-center text-gray-500 text-sm">
         <p>&copy; 2025 Heart Health Predictor. All rights reserved.</p>
-        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.</p>
+        <p class="mt-2">This tool is for informational purposes only and should not replace professional medical advice.
+        </p>
       </div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mobile menu toggle functionality
       const menuButton = document.getElementById('mobile-menu-button');
       const mobileMenu = document.getElementById('mobile-menu');
       const openIcon = document.getElementById('menu-open-icon');
       const closedIcon = document.getElementById('menu-closed-icon');
-      
-      menuButton.addEventListener('click', function() {
+
+      menuButton.addEventListener('click', function () {
         // Toggle menu visibility
         const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
         menuButton.setAttribute('aria-expanded', !isExpanded);
         mobileMenu.classList.toggle('hidden');
-        
+
         // Toggle icons
         openIcon.classList.toggle('hidden');
         closedIcon.classList.toggle('hidden');
       });
+
+      // Get all navigation links
+      const desktopNavLinks = document.querySelectorAll('.md\\:flex a');
+      const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+
+      // Function to set active link
+      function setActiveLink(clickedLink) {
+        // Get href of clicked link
+        const href = clickedLink.getAttribute('href');
+
+        // Remove active classes from all desktop links
+        desktopNavLinks.forEach(link => {
+          link.classList.remove('text-red-600', 'border-b-2', 'border-red-500');
+          link.classList.add('text-gray-600', 'hover:text-gray-800');
+        });
+
+        // Remove active classes from all mobile links
+        mobileNavLinks.forEach(link => {
+          link.classList.remove('bg-red-50/50', 'border-red-500', 'text-red-700');
+          link.classList.add('border-transparent', 'text-gray-600', 'hover:bg-gray-50/50', 'hover:border-gray-300', 'hover:text-gray-800');
+        });
+
+        // Add active classes to matching desktop links
+        desktopNavLinks.forEach(link => {
+          if (link.getAttribute('href') === href) {
+            link.classList.remove('text-gray-600', 'hover:text-gray-800');
+            link.classList.add('text-red-600', 'border-b-2', 'border-red-500');
+          }
+        });
+
+        // Add active classes to matching mobile links
+        mobileNavLinks.forEach(link => {
+          if (link.getAttribute('href') === href) {
+            link.classList.remove('border-transparent', 'text-gray-600', 'hover:bg-gray-50/50', 'hover:border-gray-300', 'hover:text-gray-800');
+            link.classList.add('bg-red-50/50', 'border-red-500', 'text-red-700');
+          }
+        });
+      }
+
+      // Add click event listeners to all navigation links
+      desktopNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          // Only prevent default if you're handling navigation in JavaScript
+          // e.preventDefault(); 
+          setActiveLink(this);
+        });
+      });
+
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          // Only prevent default if you're handling navigation in JavaScript
+          // e.preventDefault();
+          setActiveLink(this);
+        });
+      });
+
+      // Set active link based on current URL on page load
+      const currentPath = window.location.pathname;
+      const currentPageLink = [...desktopNavLinks, ...mobileNavLinks].find(link =>
+        link.getAttribute('href') === currentPath ||
+        (currentPath === '/' && link.getAttribute('href') === '/')
+      );
+
+      if (currentPageLink) {
+        setActiveLink(currentPageLink);
+      }
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Fetch sample input data to ensure all required fields are included
       fetch('/api/sample-input')
         .then(response => response.json())
@@ -294,34 +389,34 @@
         .catch(error => {
           console.error('Error fetching sample input:', error);
         });
-      
+
       // Handle form submission
       const form = document.getElementById('predictionForm');
       const resultsSection = document.getElementById('resultsSection');
       const loadingResults = document.getElementById('loadingResults');
       const predictionResults = document.getElementById('predictionResults');
       const resetButton = document.getElementById('resetButton');
-      
-      form.addEventListener('submit', function(event) {
+
+      form.addEventListener('submit', function (event) {
         event.preventDefault();
-        
+
         // Show results section with loading spinner
         resultsSection.classList.remove('hidden');
         loadingResults.classList.remove('hidden');
         predictionResults.classList.add('hidden');
-        
+
         // Scroll to results
         resultsSection.scrollIntoView({ behavior: 'smooth' });
-        
+
         // Collect form data
         const formData = new FormData(form);
         const inputData = {};
-        
+
         formData.forEach((value, key) => {
           // Convert numerical values to numbers
           inputData[key] = isNaN(value) ? value : Number(value);
         });
-        
+
         // Send prediction request
         fetch('/api/predict', {
           method: 'POST',
@@ -330,47 +425,47 @@
           },
           body: JSON.stringify(inputData),
         })
-        .then(response => response.json())
-        .then(data => {
-          // Hide loading, show results
-          loadingResults.classList.add('hidden');
-          predictionResults.classList.remove('hidden');
-          
-          // Display prediction
-          document.getElementById('predictionValue').textContent = 
-            data.label === 1 ? 'Positive (High Risk)' : 'Negative (Low Risk)';
-          
-          // Display probability if available
-          if (data.probability !== null) {
-            const probability = (data.probability * 100).toFixed(1);
-            document.getElementById('probabilityValue').textContent = `${probability}%`;
-            
-            // Render risk meter
-            renderRiskMeter(data.probability);
-          } else {
-            document.getElementById('probabilityValue').textContent = 'Not available';
-          }
-          
-          // Show appropriate risk message
-          if (data.prediction === 1) {
-            document.getElementById('highRiskMessage').classList.remove('hidden');
-            document.getElementById('lowRiskMessage').classList.add('hidden');
-          } else {
-            document.getElementById('highRiskMessage').classList.add('hidden');
-            document.getElementById('lowRiskMessage').classList.remove('hidden');
-          }
-        })
-        .catch(error => {
-          console.error('Error making prediction:', error);
-          loadingResults.classList.add('hidden');
-          predictionResults.classList.remove('hidden');
-          document.getElementById('predictionValue').textContent = 'Error';
-          document.getElementById('probabilityValue').textContent = 'Error processing request';
-        });
+          .then(response => response.json())
+          .then(data => {
+            // Hide loading, show results
+            loadingResults.classList.add('hidden');
+            predictionResults.classList.remove('hidden');
+
+            // Display prediction
+            document.getElementById('predictionValue').textContent =
+              data.label === 1 ? 'Positive (High Risk)' : 'Negative (Low Risk)';
+
+            // Display probability if available
+            if (data.probability !== null) {
+              const probability = (data.probability * 100).toFixed(1);
+              document.getElementById('probabilityValue').textContent = `${probability}%`;
+
+              // Render risk meter
+              renderRiskMeter(data.probability);
+            } else {
+              document.getElementById('probabilityValue').textContent = 'Not available';
+            }
+
+            // Show appropriate risk message
+            if (data.prediction === 1) {
+              document.getElementById('highRiskMessage').classList.remove('hidden');
+              document.getElementById('lowRiskMessage').classList.add('hidden');
+            } else {
+              document.getElementById('highRiskMessage').classList.add('hidden');
+              document.getElementById('lowRiskMessage').classList.remove('hidden');
+            }
+          })
+          .catch(error => {
+            console.error('Error making prediction:', error);
+            loadingResults.classList.add('hidden');
+            predictionResults.classList.remove('hidden');
+            document.getElementById('predictionValue').textContent = 'Error';
+            document.getElementById('probabilityValue').textContent = 'Error processing request';
+          });
       });
-      
+
       // Reset form and hide results
-      resetButton.addEventListener('click', function() {
+      resetButton.addEventListener('click', function () {
         form.reset();
         resultsSection.classList.add('hidden');
         window.scrollTo({
@@ -378,25 +473,25 @@
           behavior: 'smooth'
         });
       });
-      
+
       // Function to render risk meter
       function renderRiskMeter(probability) {
         const riskMeter = document.getElementById('riskMeter');
         riskMeter.innerHTML = '';
-        
+
         // Create semicircle meter
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttribute("width", "100%");
         svg.setAttribute("height", "100%");
         svg.setAttribute("viewBox", "0 0 200 100");
-        
+
         // Background arc
         const bgArc = document.createElementNS("http://www.w3.org/2000/svg", "path");
         bgArc.setAttribute("d", "M10,90 A80,80 0 0,1 190,90");
         bgArc.setAttribute("stroke", "#e5e7eb");
         bgArc.setAttribute("stroke-width", "12");
         bgArc.setAttribute("fill", "none");
-        
+
         // Create gradient
         const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
         gradient.setAttribute("id", "riskGradient");
@@ -404,26 +499,26 @@
         gradient.setAttribute("y1", "0%");
         gradient.setAttribute("x2", "100%");
         gradient.setAttribute("y2", "0%");
-        
+
         const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
         stop1.setAttribute("offset", "0%");
         stop1.setAttribute("stop-color", "#10B981");
-        
+
         const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
         stop2.setAttribute("offset", "50%");
         stop2.setAttribute("stop-color", "#FBBF24");
-        
+
         const stop3 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
         stop3.setAttribute("offset", "100%");
         stop3.setAttribute("stop-color", "#EF4444");
-        
+
         gradient.appendChild(stop1);
         gradient.appendChild(stop2);
         gradient.appendChild(stop3);
-        
+
         const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
         defs.appendChild(gradient);
-        
+
         // Risk arc
         const riskArc = document.createElementNS("http://www.w3.org/2000/svg", "path");
         riskArc.setAttribute("d", "M10,90 A80,80 0 0,1 190,90");
@@ -432,18 +527,18 @@
         riskArc.setAttribute("fill", "none");
         riskArc.setAttribute("stroke-dasharray", "180");
         riskArc.setAttribute("stroke-dashoffset", (180 * (1 - probability)).toString());
-        
+
         // Pointer
         const angle = Math.PI * probability;
         const x = 100 - 70 * Math.cos(angle);
         const y = 90 - 70 * Math.sin(angle);
-        
+
         const pointer = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         pointer.setAttribute("cx", x.toString());
         pointer.setAttribute("cy", y.toString());
         pointer.setAttribute("r", "8");
         pointer.setAttribute("fill", "#374151");
-        
+
         // Labels
         const lowLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
         lowLabel.setAttribute("x", "10");
@@ -451,7 +546,7 @@
         lowLabel.setAttribute("fill", "#10B981");
         lowLabel.setAttribute("font-size", "12");
         lowLabel.textContent = "Low Risk";
-        
+
         const highLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
         highLabel.setAttribute("x", "170");
         highLabel.setAttribute("y", "110");
@@ -459,7 +554,7 @@
         highLabel.setAttribute("font-size", "12");
         highLabel.setAttribute("text-anchor", "end");
         highLabel.textContent = "High Risk";
-        
+
         // Add all elements to SVG
         svg.appendChild(defs);
         svg.appendChild(bgArc);
@@ -467,10 +562,11 @@
         svg.appendChild(pointer);
         svg.appendChild(lowLabel);
         svg.appendChild(highLabel);
-        
+
         riskMeter.appendChild(svg);
       }
     });
   </script>
 </body>
+
 </html>
