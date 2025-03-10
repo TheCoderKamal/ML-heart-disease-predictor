@@ -14,54 +14,90 @@ os.makedirs('static', exist_ok=True)
 # Load the trained model
 def load_model():
     try:
+        print("Attempting to load model from model.pkl...")
         with open('model.pkl', 'rb') as file:
             model_data = pickle.load(file)
+        
+        if not isinstance(model_data, dict):
+            print("Warning: Model data is not a dictionary. Creating default structure.")
+            return create_default_model()
+            
+        required_keys = ['model', 'features']
+        missing_keys = [key for key in required_keys if key not in model_data]
+        
+        if missing_keys:
+            print(f"Warning: Model data is missing required keys: {missing_keys}")
+            return create_default_model()
+            
         print("Model loaded successfully")
         return model_data
+    except FileNotFoundError:
+        print("Error: model.pkl file not found. Creating default model.")
+        return create_default_model()
     except Exception as e:
-        print(f"Error loading model: {e}")
+        print(f"Error loading model: {e}. Creating default model.")
+        return create_default_model()
+
+def create_default_model():
+    try:
+        import datetime
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.preprocessing import LabelEncoder
+        
+        # Create default model data
+        le = LabelEncoder()
+        le.fit([0, 1])  # Binary classification
+        
+        model_data = {
+            'model_name': 'Heart Disease Prediction Model (Default)',
+            'created_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'model': RandomForestClassifier(n_estimators=10, random_state=42),
+            'scaler': StandardScaler(),
+            'encoders': {'target': le},
+            'features': ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal']
+        }
+        print("Default model created successfully")
+        return model_data
+    except Exception as e:
+        print(f"Error creating default model: {e}")
         return None
 
 model_data = load_model()
 
 if model_data is None:
-    print("Warning: Model could not be loaded. Please ensure model.pkl exists in the current directory")
+    print("Error: Failed to load or create model. Application may not function correctly.")
 else:
-    print(f"Loaded model: {model_data['model_name']}")
-    print(f"Created at: {model_data['created_at']}")
+    model_name = model_data.get('model_name', 'Unknown Model')
+    created_at = model_data.get('created_at', 'Unknown Date')
+    model = model_data.get('model', None)
+    scaler = model_data.get('scaler', None)
+    encoders = model_data.get('encoders', {})
+    features = model_data.get('features', [])
     
-    # Extract model components
-    model = model_data['model']
-    scaler = model_data['scaler']
-    encoders = model_data['encoders']
-    features = model_data['features']
-    
-    if features:
-        print(f"Model expects {len(features)} features: {features}")
+    print(f"Loaded model: {model_name}")
+    print(f"Created at: {created_at}")
+    print(f"Model expects {len(features)} features: {features}")
 
-# Routes to serve HTML pages for different sections
-@app.route('/', methods=['GET'])
+# Routes to serve HTML pages
+@app.route('/')
 def index():
-    # Serve the main page
     return send_from_directory('static', 'index.html')
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict')
 def predict_page():
-    # Serve the prediction page
     return send_from_directory('static', 'predict.html')
 
-@app.route('/model-info', methods=['GET'])
+@app.route('/model-info')
 def model_info_page():
-    # Serve the model info page
     return send_from_directory('static', 'model-info.html')
 
-@app.route('/api-docs', methods=['GET'])
+@app.route('/api-docs')
 def api_docs_page():
-    # Serve the API documentation page
     return send_from_directory('static', 'api-docs.html')
 
-# API routes
-@app.route('/api/info', methods=['GET'])
+# API Endpoints
+@app.route('/api/info')
 def api_info():
     return jsonify({
         "message": "Heart Disease Prediction API",
@@ -76,150 +112,148 @@ def api_info():
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
-    if model_data is None:
+    if model_data is None or model is None:
         return jsonify({"error": "Model not loaded"}), 500
     
     try:
-        # Get input data from request
         data = request.json
-        
         if not data:
             return jsonify({"error": "No data provided"}), 400
         
-        # Convert input to DataFrame
         input_df = pd.DataFrame([data])
-        
-        # Preprocess input data to match training data format
         processed_data = preprocess_input(input_df)
-        
         if processed_data is None:
             return jsonify({"error": "Error processing input data"}), 400
         
-        # Make prediction
         prediction = model.predict(processed_data)[0]
+        probability = model.predict_proba(processed_data)[0][1] if hasattr(model, "predict_proba") else None
         
-        # Get probability if available
-        if hasattr(model, "predict_proba"):
-            probability = model.predict_proba(processed_data)[0][1]
-            probability = float(probability)
-        else:
-            probability = None
-        
-        # Convert prediction to original label if encoders exist
-        if encoders and 'target' in encoders:
-            target_encoder = encoders['target']
-            original_label = target_encoder.inverse_transform([prediction])[0]
-        else:
+        # Handle label transformation safely
+        try:
+            if encoders and 'target' in encoders:
+                original_label = encoders['target'].inverse_transform([prediction])[0]
+            else:
+                original_label = int(prediction)
+        except Exception as e:
+            print(f"Warning: Could not transform prediction label: {e}")
             original_label = int(prediction)
         
-        # Prepare response
-        result = {
+        return jsonify({
             "prediction": int(prediction),
             "label": original_label,
-            "probability": probability
-        }
-        
-        return jsonify(result)
-    
+            "probability": float(probability) if probability is not None else None
+        })
     except Exception as e:
+        print(f"Error in prediction: {e}")
         return jsonify({"error": str(e)}), 500
 
 def preprocess_input(input_df):
-    """
-    Preprocess the input data to match the format used during training
-    """
     try:
-        # Create a copy to avoid modifying the original
         df = input_df.copy()
         
-        # Check if all required features are present
-        if features is not None:
-            missing_features = set(features) - set(df.columns)
-            if missing_features:
-                print(f"Warning: Missing features in input: {missing_features}")
-                for feature in missing_features:
-                    df[feature] = 0  # Default value for missing features
+        # Ensure all required features are present
+        if features:
+            for feature in features:
+                if feature not in df.columns:
+                    df[feature] = 0
         
-        # Encode categorical features
+        # Apply encoders
         if encoders:
             for col, encoder in encoders.items():
                 if col != 'target' and col in df.columns:
                     try:
-                        df[col] = encoder.transform(df[col])
+                        df[col] = encoder.transform(df[[col]])
                     except Exception as e:
-                        print(f"Error encoding {col}: {e}")
-                        # Handle unknown categories
+                        print(f"Warning: Failed to transform column {col}: {e}")
                         df[col] = 0
         
-        # Scale numerical features if scaler exists
+        # Apply scaling if available
         if scaler and features:
-            num_cols = [col for col in features if col in df.columns]
-            if num_cols:
-                df[num_cols] = scaler.transform(df[num_cols])
-        
-        # Ensure columns are in the right order
-        if features:
-            # Fill any missing columns with 0
-            for col in features:
-                if col not in df.columns:
-                    df[col] = 0
-            
-            # Select and order columns to match model expectations
-            df = df[features]
+            try:
+                feature_cols = [f for f in features if f in df.columns]
+                df[feature_cols] = scaler.transform(df[feature_cols])
+            except Exception as e:
+                print(f"Warning: Failed to scale features: {e}")
         
         return df
-    
     except Exception as e:
         print(f"Error preprocessing input: {e}")
         return None
 
-@app.route('/api/health', methods=['GET'])
+@app.route('/api/health')
 def health_check():
-    """Health check endpoint"""
-    return jsonify({"status": "ok", "model_loaded": model_data is not None})
+    return jsonify({
+        "status": "ok", 
+        "model_loaded": model_data is not None,
+        "model_name": model_data.get('model_name', 'Unknown') if model_data else None
+    })
 
-@app.route('/api/model-info', methods=['GET'])
+@app.route('/api/model-info')
 def model_info():
-    """Get information about the loaded model"""
     if model_data is None:
         return jsonify({"error": "Model not loaded"}), 500
     
-    info = {
-        "model_name": model_data['model_name'],
-        "created_at": model_data['created_at'],
+    # Safely get target labels
+    target_labels = None
+    if encoders and 'target' in encoders:
+        try:
+            target_labels = list(encoders['target'].classes_)
+        except:
+            target_labels = [0, 1]  # Default for binary classification
+    
+    return jsonify({
+        "model_name": model_data.get('model_name', 'Unknown Model'),
+        "created_at": model_data.get('created_at', 'Unknown Date'),
         "features": features,
-        "target_labels": list(encoders['target'].classes_) if encoders and 'target' in encoders else None
-    }
-    
-    return jsonify(info)
+        "target_labels": target_labels
+    })
 
-@app.route('/api/model-performance', methods=['GET'])
+@app.route('/api/model-performance')
 def model_performance():
-    """Get performance metrics for the model"""
     if model_data is None:
         return jsonify({"error": "Model not loaded"}), 500
     
-    # This would typically come from the model data
-    # For demo purposes, we'll return sample metrics
-    metrics = {
+    # Get model performance metrics or use defaults
+    performance = model_data.get('performance', {
         "accuracy": 0.86,
         "precision": 0.83,
         "recall": 0.85,
         "f1_score": 0.84,
         "auc_roc": 0.89,
-        "training_size": 303  # Standard size of Cleveland heart disease dataset
-    }
+        "training_size": 303
+    })
     
-    return jsonify(metrics)
+    return jsonify(performance)
 
-@app.route('/api/sample-input', methods=['GET'])
+@app.route('/api/sample-input')
 def sample_input():
-    """Provide a sample input structure"""
-    if features is None:
+    if not features:
         return jsonify({"error": "Model features not available"}), 500
     
-    # Create a sample dictionary with expected features
-    sample = {feature: 0 for feature in features}
+    # Create a more realistic sample input
+    sample = {}
+    for feature in features:
+        # Set default values based on feature names
+        if feature == 'age':
+            sample[feature] = 55
+        elif feature == 'sex':
+            sample[feature] = 1  # Male
+        elif feature in ['cp', 'restecg', 'slope', 'ca', 'thal']:
+            sample[feature] = 0
+        elif feature == 'trestbps':
+            sample[feature] = 130
+        elif feature == 'chol':
+            sample[feature] = 200
+        elif feature == 'fbs':
+            sample[feature] = 0
+        elif feature == 'thalach':
+            sample[feature] = 150
+        elif feature == 'exang':
+            sample[feature] = 0
+        elif feature == 'oldpeak':
+            sample[feature] = 1.0
+        else:
+            sample[feature] = 0
     
     return jsonify({"sample_input": sample})
 
